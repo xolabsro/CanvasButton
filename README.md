@@ -1,6 +1,6 @@
 # Xojo Custom Desktop Button Control
 
-This repository contains the code for a custom button control built for Xojo Desktop applications using the `DesktopCanvas`.
+This repository contains the code for a custom button control built for Xojo Desktop applications using the [`DesktopCanvas`](https://documentation.xojo.com/api/user_interface/desktop/desktopcanvas.html).
 
 ## Requirements
 
