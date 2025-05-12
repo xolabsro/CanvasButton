@@ -3,75 +3,116 @@ Protected Class CanvasButton
 Inherits DesktopCanvas
 	#tag Event
 		Function MouseDown(x As Integer, y As Integer) As Boolean
-		  // Set internal state to indicate the button is being pressed.
-		  IsPressed = True
-		  // Refresh the control to show the pressed state visually.
-		  Me.Refresh(False)
-		  // Return True to indicate that this event was handled.
-		  Return True
+		  #Pragma unused x
+		  #Pragma unused y
+		  
+		  // Only process if the button is enabled.
+		  If Enabled Then
+		    // Set internal state to indicate the button is being pressed.
+		    IsPressed = True
+		    // Refresh the control to show the pressed state visually.
+		    Refresh(False)
+		    // Return True to indicate that this event was handled.
+		    Return True
+		  Else
+		    // If disabled, do not handle the event.
+		    Return False
+		  End If
 		End Function
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseEnter()
-		  // Set internal state to indicate the mouse is hovering over the button.
-		  IsHovered = True
-		  // Refresh the control to show the hover state visually.
-		  Me.Refresh(False)
+		  // Only process if the button is enabled.
+		  If Enabled Then
+		    // Set internal state to indicate the mouse is hovering over the button.
+		    IsHovered = True
+		    // Refresh the control to show the hover state visually.
+		    Refresh(False)
+		  End If
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseExit()
-		  // Set internal state to indicate the mouse is no longer hovering.
-		  IsHovered = False
-		  // Refresh the control to revert from the hover state.
-		  Me.Refresh(False)
+		  // Only process if the button is enabled.
+		  If Enabled Then
+		    // Set internal state to indicate the mouse is no longer hovering.
+		    IsHovered = False
+		    // Reset pressed state if mouse leaves while pressed (prevents accidental clicks).
+		    IsPressed = False
+		    // Refresh the control to revert from the hover state.
+		    Refresh(False)
+		  End If
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseUp(x As Integer, y As Integer)
-		  // Check if the button was pressed down AND the mouse is still hovering over it.
-		  If IsPressed And IsHovered Then
-		    // If true, the button was successfully clicked. Raise the custom Pressed event.
-		    RaiseEvent Pressed
+		  #Pragma unused x
+		  #Pragma unused y
+		  
+		  // Only process if the button is enabled.
+		  If Enabled Then
+		    // Check if the button was pressed down AND the mouse is still hovering over it.
+		    If IsPressed And IsHovered Then
+		      // If true, the button was successfully clicked. Raise the custom Pressed event.
+		      RaiseEvent Pressed
+		    End If
+		    // Reset the pressed state regardless of whether the click was successful.
+		    IsPressed = False
+		    // Refresh the control to revert from the pressed state.
+		    Refresh(False)
 		  End If
-		  // Reset the pressed state regardless of whether the click was successful.
-		  IsPressed = False
-		  // Refresh the control to revert from the pressed state.
-		  Me.Refresh(False)
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub Paint(g As Graphics, areas() As Rect)
-		  // Corner radius of the button shape.
-		  Static CornerRadius As Integer = 4
+		  #Pragma unused areas
+		  
+		  // Use the custom CornerRadius property.
+		  Var currentCornerRadius As Integer = CornerRadius
 		  
 		  // Declare variables for the colors used in drawing.
-		  Var bgColor As Color
-		  Var borderColor As Color = Color.DarkBevelColor
-		  Var TextColor As Color = Color.LightTingeColor
+		  Var currentBgColor As Color
+		  Var currentBorderColor As Color
+		  Var currentTextColor As Color
 		  
-		  // Determine the background color based on the button's current state (pressed or hovered).
-		  If IsPressed Or IsHovered Then
-		    // Use a highlight color if pressed or hovered.
-		    bgColor = Color.HighlightColor
+		  // Determine colors based on the button's current state (enabled, pressed, hovered).
+		  If Enabled Then
+		    If IsPressed Then
+		      // Use highlight color if pressed.
+		      currentBgColor = HighlightColor
+		      currentBorderColor = BorderColor
+		      currentTextColor = TextColor
+		    ElseIf IsHovered Then // Check for hover only if not pressed
+		      // Use hover color if hovered.
+		      currentBgColor = HoverColor
+		      currentBorderColor = BorderColor
+		      currentTextColor = TextColor
+		    Else
+		      // Use the custom background color for the default state.
+		      currentBgColor = BackgroundColor
+		      currentBorderColor = BorderColor
+		      currentTextColor = TextColor
+		    End If
 		  Else
-		    // Use the accent theme color for the default state.
-		    bgColor = Color.AccentThemeColor
+		    // Use appropriate system or standard gray colors for the disabled state.
+		    currentBgColor = Color.LightGray
+		    currentBorderColor = Color.Gray
+		    currentTextColor = Color.DisabledTextColor // Use system disabled text color
 		  End If
 		  
 		  // Set the drawing color and draw the background shape with rounded corners.
-		  g.DrawingColor = bgColor
-		  g.FillRoundRectangle(0, 0, g.Width, g.Height, CornerRadius, CornerRadius)
+		  g.DrawingColor = currentBgColor
+		  g.FillRoundRectangle(0, 0, g.Width, g.Height, currentCornerRadius, currentCornerRadius)
 		  
 		  // Set the drawing color and pen size for the border.
-		  g.DrawingColor = borderColor
+		  g.DrawingColor = currentBorderColor
 		  g.PenSize = 2
 		  // Draw the border shape just inside the background rectangle.
-		  g.DrawRoundRectangle(1, 1, g.Width-2, g.Height-2, CornerRadius, CornerRadius)
+		  g.DrawRoundRectangle(1, 1, g.Width-2, g.Height-2, currentCornerRadius, currentCornerRadius)
 		  
 		  // Enable anti-aliasing for smoother text rendering.
 		  g.AntiAliasMode = Graphics.AntiAliasModes.HighQuality
@@ -84,7 +125,7 @@ Inherits DesktopCanvas
 		  // Calculate the Y position to center the text vertically, with a small adjustment.
 		  Var ty As Double = (g.Height + th) / 2 - 3
 		  // Set the drawing color for the text.
-		  g.DrawingColor = TextColor
+		  g.DrawingColor = currentTextColor
 		  // Draw the button text at the calculated centered position.
 		  g.DrawText(ButtonText, tx, ty)
 		End Sub
@@ -97,7 +138,27 @@ Inherits DesktopCanvas
 
 
 	#tag Property, Flags = &h0
+		BackgroundColor As Color = &c5e2d8b
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		BorderColor As Color = &c525252
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		ButtonText As String = "Click Me"
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		CornerRadius As Integer = 4
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		HighlightColor As Color = &c628eff
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		HoverColor As Color = &c729fcf
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -106,6 +167,10 @@ Inherits DesktopCanvas
 
 	#tag Property, Flags = &h21
 		Private IsPressed As Boolean = False
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		TextColor As Color = &ceeeeee
 	#tag EndProperty
 
 
@@ -300,6 +365,54 @@ Inherits DesktopCanvas
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BackgroundColor"
+			Visible=false
+			Group="Behavior"
+			InitialValue="&c5e2d8b"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BorderColor"
+			Visible=false
+			Group="Behavior"
+			InitialValue="&c525252"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="CornerRadius"
+			Visible=false
+			Group="Behavior"
+			InitialValue="4"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HighlightColor"
+			Visible=false
+			Group="Behavior"
+			InitialValue="&c628eff"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TextColor"
+			Visible=false
+			Group="Behavior"
+			InitialValue="&ceeeeee"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HoverColor"
+			Visible=false
+			Group="Behavior"
+			InitialValue="&c729fcf"
+			Type="Color"
 			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior

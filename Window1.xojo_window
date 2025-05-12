@@ -62,9 +62,14 @@ Begin DesktopWindow Window1
       AllowFocusRing  =   True
       AllowTabs       =   True
       Backdrop        =   0
+      BackgroundColor =   &c5E2D8B00
+      BorderColor     =   &c52525200
       ButtonText      =   "Click Me"
+      CornerRadius    =   4
       Enabled         =   True
       Height          =   22
+      HighlightColor  =   &c628EFF00
+      HoverColor      =   &c729FCF00
       Index           =   -2147483648
       Left            =   20
       LockBottom      =   False
@@ -76,6 +81,7 @@ Begin DesktopWindow Window1
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
+      TextColor       =   &cEEEEEE00
       Tooltip         =   ""
       Top             =   54
       Transparent     =   False
@@ -99,6 +105,19 @@ End
 	#tag Event
 		Sub Pressed()
 		  MessageBox("Hello 2")
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Opening()
+		  // Customize colors
+		  Me.BackgroundColor = Color.RGB(200, 50, 50) // A shade of red
+		  Me.HoverColor = Color.RGB(255, 100, 100) // A lighter red for hover
+		  Me.HighlightColor = Color.RGB(150, 0, 0) // A darker red for pressed
+		  Me.BorderColor = Color.Black
+		  Me.TextColor = Color.White
+		  
+		  // Adjust corner radius
+		  Me.CornerRadius = 10
 		End Sub
 	#tag EndEvent
 #tag EndEvents
