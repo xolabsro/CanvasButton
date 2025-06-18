@@ -2,6 +2,26 @@
 Protected Class CanvasButton
 Inherits DesktopCanvas
 	#tag Event
+		Sub FocusLost()
+		  If Enabled And AllowFocusRing Then
+		    IsFocused = False
+		    Refresh(False)
+		  End If
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub FocusReceived()
+		  // Only if the button is enabled
+		  If Enabled And AllowFocusRing Then
+		    IsFocused = True
+		    // Redraw so that your Paint event can draw a focus ring
+		    Refresh(False)
+		  End If
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Function MouseDown(x As Integer, y As Integer) As Boolean
 		  #Pragma unused x
 		  #Pragma unused y
@@ -10,6 +30,7 @@ Inherits DesktopCanvas
 		  If Enabled Then
 		    // Set internal state to indicate the button is being pressed.
 		    IsPressed = True
+		    SetFocus
 		    // Refresh the control to show the pressed state visually.
 		    Refresh(False)
 		    // Return True to indicate that this event was handled.
@@ -112,7 +133,14 @@ Inherits DesktopCanvas
 		  g.DrawingColor = currentBorderColor
 		  g.PenSize = 2
 		  // Draw the border shape just inside the background rectangle.
-		  g.DrawRoundRectangle(1, 1, g.Width-2, g.Height-2, currentCornerRadius, currentCornerRadius)
+		  g.DrawRoundRectangle(0, 0, g.Width, g.Height, currentCornerRadius, currentCornerRadius)
+		  
+		  // Draw the focus ring
+		  If IsFocused And AllowFocusRing Then
+		    g.DrawingColor = Color.HighlightColor
+		    g.PenSize = 1
+		    g.DrawRoundRectangle(2, 2, g.Width-4, g.Height-4, CornerRadius-2, CornerRadius-2)
+		  End If
 		  
 		  // Enable anti-aliasing for smoother text rendering.
 		  g.AntiAliasMode = Graphics.AntiAliasModes.HighQuality
@@ -159,6 +187,10 @@ Inherits DesktopCanvas
 
 	#tag Property, Flags = &h0
 		HoverColor As Color = &c729fcf
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private IsFocused As Boolean = False
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -297,7 +329,7 @@ Inherits DesktopCanvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Backdrop"
-			Visible=true
+			Visible=false
 			Group="Appearance"
 			InitialValue=""
 			Type="Picture"
@@ -336,6 +368,14 @@ Inherits DesktopCanvas
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="CornerRadius"
+			Visible=true
+			Group="Appearance"
+			InitialValue="4"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="AllowFocus"
 			Visible=true
 			Group="Behavior"
@@ -353,10 +393,50 @@ Inherits DesktopCanvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Transparent"
-			Visible=true
+			Visible=false
 			Group="Behavior"
-			InitialValue="False"
+			InitialValue=""
 			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BackgroundColor"
+			Visible=true
+			Group="Button Colors"
+			InitialValue="&c5e2d8b"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HoverColor"
+			Visible=true
+			Group="Button Colors"
+			InitialValue="&c729fcf"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BorderColor"
+			Visible=true
+			Group="Button Colors"
+			InitialValue="&c525252"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TextColor"
+			Visible=true
+			Group="Button Colors"
+			InitialValue="&ceeeeee"
+			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HighlightColor"
+			Visible=true
+			Group="Button Colors"
+			InitialValue="&c628eff"
+			Type="Color"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -365,54 +445,6 @@ Inherits DesktopCanvas
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BackgroundColor"
-			Visible=false
-			Group="Behavior"
-			InitialValue="&c5e2d8b"
-			Type="Color"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BorderColor"
-			Visible=false
-			Group="Behavior"
-			InitialValue="&c525252"
-			Type="Color"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="CornerRadius"
-			Visible=false
-			Group="Behavior"
-			InitialValue="4"
-			Type="Integer"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="HighlightColor"
-			Visible=false
-			Group="Behavior"
-			InitialValue="&c628eff"
-			Type="Color"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextColor"
-			Visible=false
-			Group="Behavior"
-			InitialValue="&ceeeeee"
-			Type="Color"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="HoverColor"
-			Visible=false
-			Group="Behavior"
-			InitialValue="&c729fcf"
-			Type="Color"
 			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
