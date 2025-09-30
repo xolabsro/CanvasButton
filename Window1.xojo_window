@@ -11,7 +11,7 @@ Begin DesktopWindow Window1
    HasMaximizeButton=   True
    HasMinimizeButton=   True
    HasTitleBar     =   True
-   Height          =   96
+   Height          =   130
    ImplicitInstance=   True
    MacProcID       =   0
    MaximumHeight   =   32000
@@ -24,52 +24,55 @@ Begin DesktopWindow Window1
    Title           =   "CanvasButton Demo Window"
    Type            =   0
    Visible         =   True
-   Width           =   276
-   Begin DesktopButton Button1
+   Width           =   312
+   Begin CanvasButton CanvasButton3
       AllowAutoDeactivate=   True
-      Bold            =   False
-      Cancel          =   False
-      Caption         =   "Button"
-      Default         =   False
+      AllowFocus      =   True
+      AllowFocusRing  =   True
+      AllowTabs       =   False
+      Backdrop        =   0
+      BackgroundColor =   &cFDFDFD00
+      BorderColor     =   &cD0D0D000
+      ButtonText      =   "Click Me"
+      CornerRadius    =   8
       Enabled         =   True
-      FontName        =   "System"
-      FontSize        =   0.0
-      FontUnit        =   0
       Height          =   22
+      HighlightColor  =   &cCCE4F700
+      HoverColor      =   &cE0EEF900
       Index           =   -2147483648
-      Italic          =   False
       Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      MacButtonStyle  =   0
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
+      TextAlignment   =   0
+      TextColor       =   &c00000000
+      TextPadding     =   8
       Tooltip         =   ""
       Top             =   20
       Transparent     =   False
-      Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   272
    End
-   Begin CanvasButton CanvasButton1
+   Begin CanvasButton CanvasButton4
       AllowAutoDeactivate=   True
       AllowFocus      =   True
       AllowFocusRing  =   True
-      AllowTabs       =   True
+      AllowTabs       =   False
       Backdrop        =   0
-      BackgroundColor =   &c5E2D8B00
-      BorderColor     =   &c52525200
+      BackgroundColor =   &cFDFDFD00
+      BorderColor     =   &cD0D0D000
       ButtonText      =   "Click Me"
-      CornerRadius    =   4
+      CornerRadius    =   8
       Enabled         =   True
       Height          =   22
-      HighlightColor  =   &c628EFF00
-      HoverColor      =   &c729FCF00
+      HighlightColor  =   &cCCE4F700
+      HoverColor      =   &cE0EEF900
       Index           =   -2147483648
       Left            =   20
       LockBottom      =   False
@@ -81,12 +84,48 @@ Begin DesktopWindow Window1
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   &cEEEEEE00
+      TextAlignment   =   1
+      TextColor       =   &c00000000
+      TextPadding     =   8
       Tooltip         =   ""
       Top             =   54
       Transparent     =   False
       Visible         =   True
-      Width           =   80
+      Width           =   272
+   End
+   Begin CanvasButton CanvasButton5
+      AllowAutoDeactivate=   True
+      AllowFocus      =   True
+      AllowFocusRing  =   True
+      AllowTabs       =   False
+      Backdrop        =   0
+      BackgroundColor =   &cFDFDFD00
+      BorderColor     =   &cD0D0D000
+      ButtonText      =   "Click Me"
+      CornerRadius    =   8
+      Enabled         =   True
+      Height          =   22
+      HighlightColor  =   &cCCE4F700
+      HoverColor      =   &cE0EEF900
+      Index           =   -2147483648
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextAlignment   =   2
+      TextColor       =   &c00000000
+      TextPadding     =   8
+      Tooltip         =   ""
+      Top             =   88
+      Transparent     =   False
+      Visible         =   True
+      Width           =   272
    End
 End
 #tag EndDesktopWindow
@@ -94,33 +133,6 @@ End
 #tag WindowCode
 #tag EndWindowCode
 
-#tag Events Button1
-	#tag Event
-		Sub Pressed()
-		  MessageBox("Hello 1")
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events CanvasButton1
-	#tag Event
-		Sub Pressed()
-		  MessageBox("Hello 2")
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Opening()
-		  // Customize colors
-		  Me.BackgroundColor = Color.RGB(200, 50, 50) // A shade of red
-		  Me.HoverColor = Color.RGB(255, 100, 100) // A lighter red for hover
-		  Me.HighlightColor = Color.RGB(150, 0, 0) // A darker red for pressed
-		  Me.BorderColor = Color.Black
-		  Me.TextColor = Color.White
-		  
-		  // Adjust corner radius
-		  Me.CornerRadius = 10
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="Name"

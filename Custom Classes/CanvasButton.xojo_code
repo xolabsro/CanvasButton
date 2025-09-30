@@ -149,7 +149,16 @@ Inherits DesktopCanvas
 		  Var tw As Double = g.TextWidth(ButtonText)
 		  Var th As Double = g.TextHeight
 		  // Calculate the X position to center the text horizontally.
-		  Var tx As Double = (g.Width - tw) / 2
+		  // Updated: compute X based on TextAlignment (Left, Center, Right) while preserving centered behavior as default.
+		  Var tx As Double
+		  Select Case TextAlignment
+		  Case TextAlign.Left
+		    tx = TextPadding
+		  Case TextAlign.Right
+		    tx = g.Width - tw - TextPadding
+		  Case TextAlign.Center
+		    tx = (g.Width - tw) / 2
+		  End Select
 		  // Calculate the Y position to center the text vertically, with a small adjustment.
 		  Var ty As Double = (g.Height + th) / 2 - 3
 		  // Set the drawing color for the text.
@@ -202,8 +211,23 @@ Inherits DesktopCanvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		TextAlignment As TextAlign = TextAlign.Center
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		TextColor As Color = &ceeeeee
 	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		TextPadding As Integer = 8
+	#tag EndProperty
+
+
+	#tag Enum, Name = TextAlign, Type = Integer, Flags = &h0
+		Left
+		  Center
+		Right
+	#tag EndEnum
 
 
 	#tag ViewBehavior
@@ -320,19 +344,32 @@ Inherits DesktopCanvas
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="TextAlignment"
+			Visible=true
+			Group="Appearance"
+			InitialValue="1"
+			Type="TextAlign"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - Left"
+				"1 - Center"
+				"2 - Right"
+			#tag EndEnumValues
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TextPadding"
+			Visible=true
+			Group="Appearance"
+			InitialValue="8"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="AllowAutoDeactivate"
 			Visible=true
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Backdrop"
-			Visible=false
-			Group="Appearance"
-			InitialValue=""
-			Type="Picture"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -392,14 +429,6 @@ Inherits DesktopCanvas
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Transparent"
-			Visible=false
-			Group="Behavior"
-			InitialValue=""
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="BackgroundColor"
 			Visible=true
 			Group="Button Colors"
@@ -437,6 +466,22 @@ Inherits DesktopCanvas
 			Group="Button Colors"
 			InitialValue="&c628eff"
 			Type="Color"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Backdrop"
+			Visible=false
+			Group="Appearance"
+			InitialValue=""
+			Type="Picture"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Transparent"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
