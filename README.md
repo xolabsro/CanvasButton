@@ -23,4 +23,4 @@ This custom control was built upon the techniques described in the official Xojo
 
 ## License
 
-This project is licensed under the [Apache License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
