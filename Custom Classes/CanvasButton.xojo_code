@@ -1,5 +1,5 @@
 #tag Class
- Attributes ( DefaultEvent = Pressed ) Protected Class CanvasButton
+Protected Class CanvasButton
 Inherits DesktopCanvas
 	#tag Event
 		Sub FocusLost()
