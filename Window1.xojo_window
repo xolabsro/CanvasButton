@@ -11,7 +11,7 @@ Begin DesktopWindow Window1
    HasMaximizeButton=   True
    HasMinimizeButton=   True
    HasTitleBar     =   True
-   Height          =   130
+   Height          =   207
    ImplicitInstance=   True
    MacProcID       =   0
    MaximumHeight   =   32000
@@ -25,107 +25,169 @@ Begin DesktopWindow Window1
    Type            =   0
    Visible         =   True
    Width           =   312
-   Begin CanvasButton CanvasButton3
+   Begin DesktopRectangle Rectangle1
       AllowAutoDeactivate=   True
-      AllowFocus      =   True
-      AllowFocusRing  =   True
-      AllowTabs       =   False
-      Backdrop        =   0
-      BackgroundColor =   &cFDFDFD00
-      BorderColor     =   &cD0D0D000
-      ButtonText      =   "Click Me"
-      CornerRadius    =   8
+      BorderColor     =   &c000000
+      BorderThickness =   1.0
+      CornerSize      =   12.0
       Enabled         =   True
-      Height          =   22
-      HighlightColor  =   &cCCE4F700
-      HoverColor      =   &cE0EEF900
+      FillColor       =   &cFFFFFF
+      Height          =   167
       Index           =   -2147483648
       Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
-      TextAlignment   =   0
-      TextColor       =   &c00000000
-      TextPadding     =   8
       Tooltip         =   ""
       Top             =   20
       Transparent     =   False
       Visible         =   True
       Width           =   272
-   End
-   Begin CanvasButton CanvasButton4
-      AllowAutoDeactivate=   True
-      AllowFocus      =   True
-      AllowFocusRing  =   True
-      AllowTabs       =   False
-      Backdrop        =   0
-      BackgroundColor =   &cFDFDFD00
-      BorderColor     =   &cD0D0D000
-      ButtonText      =   "Click Me"
-      CornerRadius    =   8
-      Enabled         =   True
-      Height          =   22
-      HighlightColor  =   &cCCE4F700
-      HoverColor      =   &cE0EEF900
-      Index           =   -2147483648
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextAlignment   =   1
-      TextColor       =   &c00000000
-      TextPadding     =   8
-      Tooltip         =   ""
-      Top             =   54
-      Transparent     =   False
-      Visible         =   True
-      Width           =   272
-   End
-   Begin CanvasButton CanvasButton5
-      AllowAutoDeactivate=   True
-      AllowFocus      =   True
-      AllowFocusRing  =   True
-      AllowTabs       =   False
-      Backdrop        =   0
-      BackgroundColor =   &cFDFDFD00
-      BorderColor     =   &cD0D0D000
-      ButtonText      =   "Click Me"
-      CornerRadius    =   8
-      Enabled         =   True
-      Height          =   22
-      HighlightColor  =   &cCCE4F700
-      HoverColor      =   &cE0EEF900
-      Index           =   -2147483648
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextAlignment   =   2
-      TextColor       =   &c00000000
-      TextPadding     =   8
-      Tooltip         =   ""
-      Top             =   88
-      Transparent     =   False
-      Visible         =   True
-      Width           =   272
+      Begin CanvasButton CanvasButton5
+         AllowAutoDeactivate=   True
+         AllowFocus      =   True
+         AllowFocusRing  =   True
+         AllowTabs       =   False
+         Backdrop        =   0
+         BackgroundColor =   
+         BorderColor     =   
+         BorderWidth     =   0.6999999999999999555911
+         ButtonText      =   "Click Me"
+         CornerRadius    =   8
+         Enabled         =   True
+         Height          =   22
+         HighlightColor  =   
+         HoverColor      =   
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Left            =   40
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   2
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextAlignment   =   2
+         TextColor       =   
+         TextPadding     =   8
+         Tooltip         =   ""
+         Top             =   108
+         Transparent     =   True
+         Visible         =   True
+         Width           =   232
+      End
+      Begin CanvasButton CanvasButton4
+         AllowAutoDeactivate=   True
+         AllowFocus      =   True
+         AllowFocusRing  =   True
+         AllowTabs       =   False
+         Backdrop        =   0
+         BackgroundColor =   
+         BorderColor     =   
+         BorderWidth     =   0.6999999999999999555911
+         ButtonText      =   "Click Me"
+         CornerRadius    =   8
+         Enabled         =   True
+         Height          =   22
+         HighlightColor  =   
+         HoverColor      =   
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Left            =   40
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   1
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextAlignment   =   1
+         TextColor       =   
+         TextPadding     =   8
+         Tooltip         =   ""
+         Top             =   74
+         Transparent     =   True
+         Visible         =   True
+         Width           =   232
+      End
+      Begin CanvasButton CanvasButton3
+         AllowAutoDeactivate=   True
+         AllowFocus      =   True
+         AllowFocusRing  =   True
+         AllowTabs       =   False
+         Backdrop        =   0
+         BackgroundColor =   
+         BorderColor     =   
+         BorderWidth     =   0.6999999999999999555911
+         ButtonText      =   "Click Me"
+         CornerRadius    =   8
+         Enabled         =   True
+         Height          =   22
+         HighlightColor  =   
+         HoverColor      =   
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Left            =   40
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextAlignment   =   0
+         TextColor       =   
+         TextPadding     =   8
+         Tooltip         =   ""
+         Top             =   40
+         Transparent     =   True
+         Visible         =   True
+         Width           =   232
+      End
+      Begin DesktopButton Button1
+         AllowAutoDeactivate=   True
+         Bold            =   False
+         Cancel          =   False
+         Caption         =   "Button"
+         Default         =   False
+         Enabled         =   True
+         FontName        =   "System"
+         FontSize        =   0.0
+         FontUnit        =   0
+         Height          =   22
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   False
+         Left            =   40
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         MacButtonStyle  =   0
+         Scope           =   0
+         TabIndex        =   3
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Tooltip         =   ""
+         Top             =   142
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   232
+      End
    End
 End
 #tag EndDesktopWindow
@@ -133,6 +195,13 @@ End
 #tag WindowCode
 #tag EndWindowCode
 
+#tag Events Rectangle1
+	#tag Event
+		Sub Opening()
+		  Me.BorderColor = Color.FrameColor
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="Name"

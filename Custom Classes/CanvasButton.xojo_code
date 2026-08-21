@@ -95,50 +95,55 @@ Inherits DesktopCanvas
 		  // Use the custom CornerRadius property.
 		  Var currentCornerRadius As Integer = CornerRadius
 		  
-		  // Declare variables for the colors used in drawing.
+		  Var resolvedBackgroundColor As Color = Color.FillColor
+		  If BackgroundColor <> Nil Then resolvedBackgroundColor = BackgroundColor
+		  
+		  Var resolvedHoverColor As Color = Color.HighlightColor
+		  If HoverColor <> Nil Then resolvedHoverColor = HoverColor
+		  
+		  Var resolvedHighlightColor As Color = Color.HighlightColor
+		  If HighlightColor <> Nil Then resolvedHighlightColor = HighlightColor
+		  
+		  Var resolvedBorderColor As Color = Color.FrameColor
+		  If BorderColor <> Nil Then resolvedBorderColor = BorderColor
+		  
+		  Var resolvedTextColor As Color = Color.TextColor
+		  If TextColor <> Nil Then resolvedTextColor = TextColor
+		  
 		  Var currentBgColor As Color
 		  Var currentBorderColor As Color
 		  Var currentTextColor As Color
 		  
-		  // Determine colors based on the button's current state (enabled, pressed, hovered).
 		  If Enabled Then
 		    If IsPressed Then
-		      // Use highlight color if pressed.
-		      currentBgColor = HighlightColor
-		      currentBorderColor = BorderColor
-		      currentTextColor = TextColor
-		    ElseIf IsHovered Then // Check for hover only if not pressed
-		      // Use hover color if hovered.
-		      currentBgColor = HoverColor
-		      currentBorderColor = BorderColor
-		      currentTextColor = TextColor
+		      currentBgColor = resolvedHighlightColor
+		    ElseIf IsHovered Then
+		      currentBgColor = resolvedHoverColor
 		    Else
-		      // Use the custom background color for the default state.
-		      currentBgColor = BackgroundColor
-		      currentBorderColor = BorderColor
-		      currentTextColor = TextColor
+		      currentBgColor = resolvedBackgroundColor
 		    End If
+		    
+		    currentBorderColor = resolvedBorderColor
+		    currentTextColor = resolvedTextColor
 		  Else
-		    // Use appropriate system or standard gray colors for the disabled state.
 		    currentBgColor = Color.LightGray
 		    currentBorderColor = Color.Gray
-		    currentTextColor = Color.DisabledTextColor // Use system disabled text color
+		    currentTextColor = Color.DisabledTextColor
 		  End If
 		  
-		  // Set the drawing color and draw the background shape with rounded corners.
 		  g.DrawingColor = currentBgColor
 		  g.FillRoundRectangle(0, 0, g.Width, g.Height, currentCornerRadius, currentCornerRadius)
 		  
 		  // Set the drawing color and pen size for the border.
 		  g.DrawingColor = currentBorderColor
-		  g.PenSize = 2
+		  g.PenSize = BorderWidth
 		  // Draw the border shape just inside the background rectangle.
 		  g.DrawRoundRectangle(0, 0, g.Width, g.Height, currentCornerRadius, currentCornerRadius)
 		  
 		  // Draw the focus ring
 		  If IsFocused And AllowFocusRing Then
 		    g.DrawingColor = Color.HighlightColor
-		    g.PenSize = 1
+		    g.PenSize = BorderWidth
 		    g.DrawRoundRectangle(2, 2, g.Width-4, g.Height-4, CornerRadius-2, CornerRadius-2)
 		  End If
 		  
@@ -175,11 +180,15 @@ Inherits DesktopCanvas
 
 
 	#tag Property, Flags = &h0
-		BackgroundColor As Color = &c5e2d8b
+		BackgroundColor As ColorGroup
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		BorderColor As Color = &c525252
+		BorderColor As ColorGroup
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		BorderWidth As Double = 0.7
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -191,11 +200,11 @@ Inherits DesktopCanvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		HighlightColor As Color = &c628eff
+		HighlightColor As ColorGroup
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		HoverColor As Color = &c729fcf
+		HoverColor As ColorGroup
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -215,7 +224,7 @@ Inherits DesktopCanvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		TextColor As Color = &ceeeeee
+		TextColor As ColorGroup
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -413,6 +422,14 @@ Inherits DesktopCanvas
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="BorderWidth"
+			Visible=true
+			Group="Appearance"
+			InitialValue="0.7"
+			Type="Double"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="AllowFocus"
 			Visible=true
 			Group="Behavior"
@@ -432,40 +449,40 @@ Inherits DesktopCanvas
 			Name="BackgroundColor"
 			Visible=true
 			Group="Button Colors"
-			InitialValue="&c5e2d8b"
-			Type="Color"
+			InitialValue=""
+			Type="ColorGroup"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HoverColor"
 			Visible=true
 			Group="Button Colors"
-			InitialValue="&c729fcf"
-			Type="Color"
+			InitialValue=""
+			Type="ColorGroup"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="BorderColor"
 			Visible=true
 			Group="Button Colors"
-			InitialValue="&c525252"
-			Type="Color"
+			InitialValue=""
+			Type="ColorGroup"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextColor"
 			Visible=true
 			Group="Button Colors"
-			InitialValue="&ceeeeee"
-			Type="Color"
+			InitialValue=""
+			Type="ColorGroup"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HighlightColor"
 			Visible=true
 			Group="Button Colors"
-			InitialValue="&c628eff"
-			Type="Color"
+			InitialValue=""
+			Type="ColorGroup"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -478,7 +495,7 @@ Inherits DesktopCanvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Transparent"
-			Visible=false
+			Visible=true
 			Group="Behavior"
 			InitialValue=""
 			Type="Boolean"
